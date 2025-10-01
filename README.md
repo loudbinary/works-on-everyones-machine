@@ -1,5 +1,9 @@
 # Works on Everyone's Machines
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Bash](https://img.shields.io/badge/Bash-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/loudbinary/works-on-everyones-machines/graphs/commit-activity)
+
 > "Works on my machine..." becomes a thing of the past.
 
 A workstation setup and compliance automation system designed to standardize development environments and streamline the contributor onboarding process.

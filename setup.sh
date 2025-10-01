@@ -89,7 +89,7 @@ if command_exists git; then
     if ! git config --global user.name >/dev/null 2>&1; then
         print_warning "Git user.name is not configured"
         if [ "$INTERACTIVE" = true ]; then
-            read -p "Enter your name for Git: " git_name
+            read -r -p "Enter your name for Git: " git_name
             git config --global user.name "$git_name"
             print_success "Git user.name configured"
         else
@@ -100,7 +100,7 @@ if command_exists git; then
     if ! git config --global user.email >/dev/null 2>&1; then
         print_warning "Git user.email is not configured"
         if [ "$INTERACTIVE" = true ]; then
-            read -p "Enter your email for Git: " git_email
+            read -r -p "Enter your email for Git: " git_email
             git config --global user.email "$git_email"
             print_success "Git user.email configured"
         else
@@ -149,7 +149,7 @@ else
         read -p "Do you want to generate an SSH key? (y/n) " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            read -p "Enter your email for SSH key: " ssh_email
+            read -r -p "Enter your email for SSH key: " ssh_email
             ssh-keygen -t ed25519 -C "$ssh_email" -f ~/.ssh/id_ed25519 -N ""
             print_success "SSH key generated"
             print_info "Add this public key to your GitHub/GitLab account:"
