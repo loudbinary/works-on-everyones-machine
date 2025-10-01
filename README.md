@@ -299,9 +299,15 @@ git config --global user.email "your.email@example.com"
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
+## Documentation
+
+- 📖 [Quick Start Guide](QUICKSTART.md) - Fast setup reference
+- 🏗️ [Architecture](ARCHITECTURE.md) - System design and extension guide
+- 🤝 [Contributing](CONTRIBUTING.md) - How to contribute
+- 📋 [Examples](examples/) - Ready-to-use configurations
+
 ## Support
 
-- 📖 [Documentation](README.md)
 - 🐛 [Issue Tracker](../../issues)
 - 💬 [Discussions](../../discussions)
 
