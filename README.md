@@ -15,6 +15,8 @@ This project provides automated tools to:
 
 ## Quick Start
 
+> 📖 **New here?** See [QUICKSTART.md](QUICKSTART.md) for a condensed guide!
+
 ### For Contributors
 
 1. **Clone the repository**
@@ -26,6 +28,11 @@ This project provides automated tools to:
 2. **Run the setup script**
    ```bash
    ./setup.sh
+   ```
+   
+   Or in non-interactive mode (for CI/CD):
+   ```bash
+   ./setup.sh --non-interactive
    ```
 
 3. **Verify your environment**
@@ -53,7 +60,14 @@ The setup script handles:
 
 **Usage:**
 ```bash
+# Interactive mode (prompts for user input)
 ./setup.sh
+
+# Non-interactive mode (skips prompts, useful for CI/CD)
+./setup.sh --non-interactive
+
+# Show help
+./setup.sh --help
 ```
 
 ### ✅ Compliance Checking (`check-compliance.sh`)

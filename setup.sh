@@ -7,6 +7,29 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${CONFIG_FILE:-$SCRIPT_DIR/config.yml}"
+INTERACTIVE="${INTERACTIVE:-true}"
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --non-interactive|-n)
+            INTERACTIVE=false
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $0 [--non-interactive|-n]"
+            echo ""
+            echo "Options:"
+            echo "  --non-interactive, -n   Run without prompting for user input"
+            echo "  --help, -h              Show this help message"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
 
 # Colors for output
 RED='\033[0;31m'
@@ -65,16 +88,24 @@ if command_exists git; then
     # Check Git configuration
     if ! git config --global user.name >/dev/null 2>&1; then
         print_warning "Git user.name is not configured"
-        read -p "Enter your name for Git: " git_name
-        git config --global user.name "$git_name"
-        print_success "Git user.name configured"
+        if [ "$INTERACTIVE" = true ]; then
+            read -p "Enter your name for Git: " git_name
+            git config --global user.name "$git_name"
+            print_success "Git user.name configured"
+        else
+            print_warning "Skipping Git user.name configuration (run interactively to configure)"
+        fi
     fi
     
     if ! git config --global user.email >/dev/null 2>&1; then
         print_warning "Git user.email is not configured"
-        read -p "Enter your email for Git: " git_email
-        git config --global user.email "$git_email"
-        print_success "Git user.email configured"
+        if [ "$INTERACTIVE" = true ]; then
+            read -p "Enter your email for Git: " git_email
+            git config --global user.email "$git_email"
+            print_success "Git user.email configured"
+        else
+            print_warning "Skipping Git user.email configuration (run interactively to configure)"
+        fi
     fi
 else
     print_error "Git is not installed. Please install Git first."
@@ -114,14 +145,18 @@ if [ -f ~/.ssh/id_rsa ] || [ -f ~/.ssh/id_ed25519 ]; then
     print_success "SSH key exists"
 else
     print_warning "No SSH key found"
-    read -p "Do you want to generate an SSH key? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        read -p "Enter your email for SSH key: " ssh_email
-        ssh-keygen -t ed25519 -C "$ssh_email" -f ~/.ssh/id_ed25519 -N ""
-        print_success "SSH key generated"
-        print_info "Add this public key to your GitHub/GitLab account:"
-        cat ~/.ssh/id_ed25519.pub
+    if [ "$INTERACTIVE" = true ]; then
+        read -p "Do you want to generate an SSH key? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            read -p "Enter your email for SSH key: " ssh_email
+            ssh-keygen -t ed25519 -C "$ssh_email" -f ~/.ssh/id_ed25519 -N ""
+            print_success "SSH key generated"
+            print_info "Add this public key to your GitHub/GitLab account:"
+            cat ~/.ssh/id_ed25519.pub
+        fi
+    else
+        print_warning "Skipping SSH key generation (run interactively to generate)"
     fi
 fi
 

@@ -22,6 +22,9 @@ jobs:
     - name: Make scripts executable
       run: chmod +x setup.sh check-compliance.sh
     
+    - name: Run setup in non-interactive mode
+      run: ./setup.sh --non-interactive
+    
     - name: Run compliance check
       run: ./check-compliance.sh
     

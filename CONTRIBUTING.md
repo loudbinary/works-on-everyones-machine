@@ -17,8 +17,13 @@ Welcome to the project! This guide will help you set up your development environ
    This script will:
    - Check if required tools are installed
    - Configure Git settings
-   - Set up SSH keys (optional)
+   - Set up SSH keys (optional, prompts for confirmation)
    - Apply recommended configurations
+   
+   For automated/CI environments, use non-interactive mode:
+   ```bash
+   ./setup.sh --non-interactive
+   ```
 
 3. **Verify compliance**
    ```bash
