@@ -1,0 +1,44 @@
+# Example configuration for a Docker-based project
+# Copy this to your project as config.yml and customize as needed
+
+version: "1.0"
+
+required_tools:
+  git:
+    min_version: "2.30.0"
+    check_command: "git --version"
+  
+  docker:
+    min_version: "20.10.0"
+    check_command: "docker --version"
+  
+  docker-compose:
+    min_version: "2.0.0"
+    check_command: "docker-compose --version"
+    optional: true
+
+system_requirements:
+  disk_space_gb: 20
+  ram_gb: 8
+
+git_config:
+  - key: "core.autocrlf"
+    value: "input"
+  - key: "pull.rebase"
+    value: "false"
+
+compliance_checks:
+  - name: "Git User Config"
+    check_command: "git config --global user.name && git config --global user.email"
+    description: "Git user name and email should be configured"
+    severity: "error"
+  
+  - name: "Docker Running"
+    check_command: "docker ps"
+    description: "Docker daemon should be running"
+    severity: "error"
+  
+  - name: "Docker Permissions"
+    check_command: "docker ps"
+    description: "User should have permissions to run Docker without sudo"
+    severity: "warning"

@@ -1,0 +1,71 @@
+# Workstation Setup and Compliance Configuration
+# This file defines the requirements for a standardized development environment
+
+version: "1.0"
+
+# Required tools and their versions
+required_tools:
+  git:
+    min_version: "2.30.0"
+    check_command: "git --version"
+  
+  docker:
+    min_version: "20.10.0"
+    check_command: "docker --version"
+    optional: true
+  
+  node:
+    min_version: "14.0.0"
+    check_command: "node --version"
+    optional: true
+  
+  python:
+    min_version: "3.8.0"
+    check_command: "python3 --version"
+    optional: true
+
+# System requirements
+system_requirements:
+  disk_space_gb: 10
+  ram_gb: 4
+
+# Git configuration
+git_config:
+  - key: "core.autocrlf"
+    value: "input"
+  - key: "pull.rebase"
+    value: "false"
+
+# Pre-commit hooks
+pre_commit_hooks:
+  enabled: true
+  hooks:
+    - id: "trailing-whitespace"
+      description: "Trim trailing whitespace"
+    - id: "end-of-file-fixer"
+      description: "Ensure files end with newline"
+    - id: "check-yaml"
+      description: "Check YAML syntax"
+    - id: "check-json"
+      description: "Check JSON syntax"
+
+# Environment variables (examples)
+environment_variables:
+  - name: "EDITOR"
+    value: "vim"
+    required: false
+  - name: "LANG"
+    value: "en_US.UTF-8"
+    required: false
+
+# Compliance checks
+compliance_checks:
+  - name: "SSH Key Setup"
+    check_command: "test -f ~/.ssh/id_rsa || test -f ~/.ssh/id_ed25519"
+    description: "SSH key should be configured"
+    severity: "warning"
+  
+  - name: "Git User Config"
+    check_command: "git config --global user.name && git config --global user.email"
+    description: "Git user name and email should be configured"
+    severity: "error"
