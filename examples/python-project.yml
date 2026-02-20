@@ -1,0 +1,43 @@
+# Example configuration for a Python project
+# Copy this to your project as config.yml and customize as needed
+
+version: "1.0"
+
+required_tools:
+  git:
+    min_version: "2.30.0"
+    check_command: "git --version"
+  
+  python:
+    min_version: "3.10.0"
+    check_command: "python3 --version"
+  
+  pip:
+    min_version: "22.0.0"
+    check_command: "pip3 --version"
+
+system_requirements:
+  disk_space_gb: 10
+  ram_gb: 4
+
+git_config:
+  - key: "core.autocrlf"
+    value: "input"
+  - key: "pull.rebase"
+    value: "false"
+
+environment_variables:
+  - name: "PYTHONPATH"
+    value: "."
+    required: false
+
+compliance_checks:
+  - name: "Git User Config"
+    check_command: "git config --global user.name && git config --global user.email"
+    description: "Git user name and email should be configured"
+    severity: "error"
+  
+  - name: "Virtual Environment"
+    check_command: "test -d venv || test -d .venv"
+    description: "Virtual environment should be created (run python3 -m venv venv)"
+    severity: "warning"

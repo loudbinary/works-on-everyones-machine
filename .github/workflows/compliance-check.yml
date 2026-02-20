@@ -1,0 +1,36 @@
+name: Compliance Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Git
+      run: |
+        git config --global user.name "CI Bot"
+        git config --global user.email "ci@example.com"
+    
+    - name: Make scripts executable
+      run: chmod +x setup.sh check-compliance.sh
+    
+    - name: Run setup in non-interactive mode
+      run: ./setup.sh --non-interactive
+    
+    - name: Run compliance check
+      run: ./check-compliance.sh
+    
+    - name: Upload compliance report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: compliance-report
+        path: compliance-report.txt

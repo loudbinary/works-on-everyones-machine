@@ -1,0 +1,38 @@
+# Example configuration for a Node.js project
+# Copy this to your project as config.yml and customize as needed
+
+version: "1.0"
+
+required_tools:
+  git:
+    min_version: "2.30.0"
+    check_command: "git --version"
+  
+  node:
+    min_version: "18.0.0"
+    check_command: "node --version"
+  
+  npm:
+    min_version: "9.0.0"
+    check_command: "npm --version"
+
+system_requirements:
+  disk_space_gb: 10
+  ram_gb: 4
+
+git_config:
+  - key: "core.autocrlf"
+    value: "input"
+  - key: "pull.rebase"
+    value: "false"
+
+compliance_checks:
+  - name: "Git User Config"
+    check_command: "git config --global user.name && git config --global user.email"
+    description: "Git user name and email should be configured"
+    severity: "error"
+  
+  - name: "Node Modules"
+    check_command: "test -d node_modules"
+    description: "Dependencies should be installed (run npm install)"
+    severity: "warning"
